@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.controllers.MenuController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Общие">
+            <items>
+              <MenuItem mnemonicParsing="false" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="База данных">
+            <items>
+              <MenuItem fx:id="loginInMenu" mnemonicParsing="false" onAction="#loginAction" text="Вход" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Помощь">
+            <items>
+              <MenuItem mnemonicParsing="false" text="О программе" />
+            </items>
+          </Menu>
+            <Menu fx:id="userInfoMenu" mnemonicParsing="false" text="" />
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox prefHeight="14.0" prefWidth="1024.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
