@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -19,17 +20,34 @@ import java.io.File;
  * Created by NKostya on 23.05.2016.
  */
 public class ShowController {
+
+    @FXML
     public ImageView img;
+
+    @FXML
     public Button download;
+
+    @FXML
     public AnchorPane stage;
+
+    @FXML
     public ListView imageListView;
+
+    @FXML
     public ImageView numberView;
+
+    @FXML
     private ObservableList<File> images = FXCollections.observableArrayList();
-    //    public Slider threshold;
-    private Main main;
+
     private File[] listOfFile;
+
+    private Main main;
+
+    public Main getMain() {
+        return main;
+    }
+
     public void setMain(Main main) {
-//        imageListView.set
         this.main = main;
     }
 
@@ -39,7 +57,7 @@ public class ShowController {
      */
     public void downloadAction(ActionEvent actionEvent) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Выберите папку с изображениями");
+        directoryChooser.setTitle("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         File file = directoryChooser.showDialog(main.getPrimaryStage());
         if(file != null) {
             listOfFile = file.listFiles();
@@ -51,14 +69,14 @@ public class ShowController {
         }*/
         if(file != null) {
             for(File i: listOfFile) {
-                // Загружаем только те файлы, которые имеют в совем названии .jpg
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ .jpg
                 if(i.getPath().contains(".jpg")) {
                     this.images.add(i);
-                } else { //Если в указаной папке не найдены изображение - выведем окно с ошибкой
+                } else { //пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Укажите папку с изображениями");
-                    alert.setHeaderText("Изображения не найдены");
-                    alert.setContentText("Пожалуйста, укажите папку, в которой находятся изображения");
+                    alert.setTitle("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+                    alert.setHeaderText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+                    alert.setContentText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
                     alert.showAndWait();
                     break;
                 }
@@ -71,7 +89,7 @@ public class ShowController {
     }
 
     /**
-     * При выборе элемента в {@link #imageListView} производит загрузку изображения в {@link #img}
+     * пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ {@link #imageListView} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ {@link #img}
      * @param event
      */
     public void onClickAction(Event event) {

@@ -15,42 +15,35 @@ import java.io.IOException;
  * Created by NKostya on 23.05.2016.
  */
 public class Main extends Application {
+
     private Stage primaryStage;
     private BorderPane rootLayout;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         initRootLayout();
         initShow();
     }
 
-    public void initRootLayout() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(Main.class.getResource("resources/fxml/Menu.fxml"));
-            System.out.println(getClass().getResource("/Menu.fxml"));
-//            rootLayout = (BorderPane) loader.load(Main.class.getResource("/resources/Menu.fxml"));
-            rootLayout = (BorderPane) loader.load(getClass().getResource("/Menu.fxml"));
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            MenuController menuController = loader.getController();
-            menuController.setMain(this);
-            primaryStage.show();
-        } catch (IOException e) { e.printStackTrace(); }
+    public void initRootLayout() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        rootLayout = loader.load(getClass().getResourceAsStream("/Menu.fxml"));
+        MenuController controller = loader.getController();
+        controller.setMain(this);
+        primaryStage.setScene(new Scene(rootLayout));
+        primaryStage.show();
     }
 
-    public void initShow() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResourceAsStream("resources/fxml/Show.fxml"));
-            AnchorPane pane = (AnchorPane) loader.load(getClass().getResource("/Show.fxml"));
-            rootLayout.setCenter(pane);
-            primaryStage.setResizable(false);
-            ShowController showController = loader.getController();
-            showController.setMain(this);
-        } catch (IOException e) { }
+    public void initShow() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        AnchorPane pane = loader.load(getClass().getResourceAsStream("/Show.fxml"));
+        ShowController controller = loader.getController();
+        controller.setMain(this);
+        rootLayout.setCenter(pane);
+        primaryStage.setResizable(false);
     }
+
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
