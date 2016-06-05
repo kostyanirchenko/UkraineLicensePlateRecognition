@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="stage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="743.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="source.controllers.ShowController">
+   <children>
+      <ImageView fx:id="img" fitHeight="461.0" fitWidth="792.0" layoutX="67.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <ListView fx:id="imageListView" layoutX="803.0" layoutY="36.0" onMouseClicked="#onClickAction" prefHeight="461.0" prefWidth="200.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <HBox layoutX="14.0" layoutY="606.0" spacing="20.0">
+         <children>
+            <ImageView fx:id="numberView" fitHeight="84.0" fitWidth="186.0" layoutX="14.0" layoutY="606.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="824.0" AnchorPane.topAnchor="606.0" />
+            <ImageView fx:id="binaryImage" fitHeight="84.0" fitWidth="200.0" layoutX="216.0" layoutY="606.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="countorsView" fitHeight="84.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </HBox>
+      <Button fx:id="exitButton" layoutX="945.0" layoutY="704.0" mnemonicParsing="false" onAction="#exitAction" text="Выход" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <HBox layoutX="14.0" layoutY="704.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+         <children>
+            <Button fx:id="download" layoutX="14.0" layoutY="704.0" mnemonicParsing="false" onAction="#downloadAction" text="Выбрать папку" />
+            <Button fx:id="recognitionButton" layoutX="125.0" layoutY="704.0" mnemonicParsing="false" onAction="#recognitionAction" text="Распознать" />
+         </children>
+      </HBox>
+      <Label layoutX="10.0" layoutY="580.0" text="Каскад Хаара" />
+      <Label layoutX="217.0" layoutY="580.0" text="Бинаризация" />
+      <Label layoutX="406.0" layoutY="580.0" text="Поиск контуров" />
+   </children>
+</AnchorPane>
