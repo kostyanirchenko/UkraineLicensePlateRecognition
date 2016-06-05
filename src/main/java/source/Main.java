@@ -3,17 +3,27 @@ package source;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.opencv.core.Core;
 import org.opencv.objdetect.CascadeClassifier;
+import source.controllers.EditUserInfoController;
 import source.controllers.MenuController;
 import source.controllers.ShowController;
+import source.entity.Users;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+/**
+ * Главный класс. Загружает все контроллеры, нативную библиотеку, устанавливает java.library.path
+ *
+ * Created by Kostya Nirchenko.
+ * @sinse 19.05.2016
+ */
 public class Main extends Application {
 
     private Stage primaryStage;
@@ -45,8 +55,26 @@ public class Main extends Application {
             ShowController showController = loader.getController();
             showController.setMain(this);
             rootLayout.setCenter(pane);
-        primaryStage.setResizable(false);
+            primaryStage.setResizable(false);
     }
+
+    public boolean editUserInfo(Users users, int userId) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        AnchorPane pane = loader.load(getClass().getResourceAsStream("/EditUserInfo.fxml"));
+        Stage editStage = new Stage();
+        editStage.setTitle("Редактирование");
+        editStage.getIcons().add(new Image(getClass().getResourceAsStream("/edit.png")));
+        editStage.initModality(Modality.WINDOW_MODAL);
+        editStage.initOwner(primaryStage);
+        EditUserInfoController editUserInfoController = loader.getController();
+        editUserInfoController.setEditStage(editStage);
+        editUserInfoController.setUser(users);
+        editUserInfoController.setUserId(userId);
+        editStage.setScene(new Scene(pane));
+        editStage.showAndWait();
+        return editUserInfoController.isNextClicked();
+    }
+
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
