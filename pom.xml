@@ -39,6 +39,29 @@
                     <include>**/*.fxml</include>
                 </includes>
             </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>${basedir}/src/main/resources/images</directory>
+                <includes>
+                    <include>**/*.png</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>${basedir}/src/main/resources/source</directory>
+                <includes>
+                    <include>**/*.dll</include>
+                    <include>**/*.java</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>${basedir}/src/main/resources/source/x86</directory>
+                <includes>
+                    <include>**/*.dll</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>

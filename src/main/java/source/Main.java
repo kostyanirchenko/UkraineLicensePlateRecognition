@@ -45,7 +45,7 @@ public class Main extends Application {
             ShowController showController = loader.getController();
             showController.setMain(this);
             rootLayout.setCenter(pane);
-            primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
     }
     public Stage getPrimaryStage() {
         return this.primaryStage;
