@@ -8,11 +8,21 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import source.Main;
+import source.entity.Users;
+import util.HibernateUtil;
+import util.UsersAlert;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,9 +35,11 @@ public class MenuController {
     private Main main;
     private boolean loginSuccess;
     private ObservableList<MenuItem> usersItems = FXCollections.observableArrayList();
+    private Session session = null;
+    private List<Users> adminUser;
 
     public void setMain(Main main) {
-        userInfoMenu.setDisable(true);
+        userInfoMenu.setVisible(false);
         this.main = main;
     }
 
@@ -39,7 +51,7 @@ public class MenuController {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Вход администратора");
         dialog.setHeaderText("Пожалуйста, выполните вход администратора");
-        dialog.setGraphic(new ImageView("file:" + System.getProperty("user.dir") + "\\src\\resources\\images\\login.png"));
+        dialog.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/login.png"))));
         ButtonType loginButton = new ButtonType("Вход", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButton = new ButtonType("Назад", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButton, cancelButton);
@@ -70,25 +82,85 @@ public class MenuController {
         });
         Optional<Pair<String, String>> result = dialog.showAndWait();
         result.ifPresent(usernamePassword -> {
-            //TODO need to write code which connect to database and search. Hibernate!
-
+            try {
+                openSession();
+                this.session.beginTransaction();
+                Query query = this.session.createQuery("from Users where username = :login and userPassword = :password").setString("login", usernamePassword.getKey()).setString("password", usernamePassword.getValue());
+                adminUser = (List<Users>) query.list();
+                this.session.getTransaction().commit();
+                if(!adminUser.isEmpty()) {
+                    if(adminUser.get(0).getUserGroup().equals("admin")) {
+                        this.loginSuccess = true;
+                        userInfoMenu.setVisible(true);
+                        userInfoMenu.setText(usernamePassword.getKey());
+                        usersItems.addAll(new MenuItem("Изменить данные"), new MenuItem("Выход"));
+                        userInfoMenu.getItems().addAll(usersItems);
+                        initUser();
+                    } else {
+                        Alert logErr = UsersAlert.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", null, "Пользователь не находится в группе \"Администраторы \"", true);
+                        Stage logErrStage = (Stage) logErr.getDialogPane().getScene().getWindow();
+                        logErrStage.getIcons().add(new Image(Main.class.getResourceAsStream("/error.png")));
+                        logErrStage.showAndWait();
+                    }
+                } else {
+                    Alert passErr = UsersAlert.showSimpleDialog(Alert.AlertType.ERROR, "Ошибка", null, "Неверное имя пользователя или пароль, попробуйте еще раз", true);
+                    Stage passErrStage = (Stage) passErr.getDialogPane().getScene().getWindow();
+                    passErrStage.getIcons().add(new Image(Main.class.getResourceAsStream("/error.png")));
+                    passErrStage.showAndWait();
+                }
+            } catch (HibernateException e) {
+                UsersAlert.throwsException(e);
+            } finally {
+                closeSession();
+            }
         });
-        loginSuccess = true;
-        /*if(loginSuccess) {
-            userInfoMenu.setDisable(false);
-            String username = "atatata";
-            userInfoMenu.setText(username);
-            usersItems.addAll(new MenuItem("Изменить данные"), new MenuItem("Выход"));
-            userInfoMenu.getItems().addAll(usersItems);
-            initUser();
-        }*/
     }
 
     public void initUser() {
 
         MenuItem exit = usersItems.get(1);
         exit.setOnAction(event -> {
-            System.exit(0);
+            userInfoMenu.getItems().clear();
+            usersItems.clear();
+            userInfoMenu.setVisible(false);
         });
+        MenuItem edit = usersItems.get(0);
+        edit.setOnAction(event -> {
+            for(Users i : adminUser) {
+                int userId = i.getUserId();
+                String username = i.getUsername();
+                String userPassword = i.getUserPassword();
+                String created_at = i.getCreated_at();
+                String userGroup = i.getUserGroup();
+                Users admin = new Users(
+                        username,
+                        userPassword,
+                        created_at,
+                        userGroup
+                );
+                try {
+                    boolean nextClicked = main.editUserInfo(admin, userId);
+                    if(nextClicked) {
+                        Alert confirm = UsersAlert.showSimpleDialog(Alert.AlertType.INFORMATION, "Изменение данных", "Операция прошла успешно",
+                                "Данные успешно изменены!", true);
+                        Stage confirmStage = (Stage) confirm.getDialogPane().getScene().getWindow();
+                        confirmStage.getIcons().add(new Image(Main.class.getResourceAsStream("/confirm.png")));
+                        confirmStage.showAndWait();
+                    }
+                } catch (IOException e) {
+                    UsersAlert.throwsException(e);
+                }
+            }
+        });
+    }
+
+    private void openSession() {
+        this.session = HibernateUtil.getSessionFactory().openSession();
+    }
+
+    private void closeSession() {
+        if(this.session != null && this.session.isOpen()){
+            this.session.close();
+        }
     }
 }
