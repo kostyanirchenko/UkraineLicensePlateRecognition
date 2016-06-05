@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="source.entity.Users" table="users">
+        <id name="userId" type="java.lang.Integer">
+            <column name="userId" />
+            <generator class="identity" />
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="username" length="30" not-null="true" unique="true" />
+        </property>
+        <property name="userPassword" type="java.lang.String">
+            <column name="userPassword" length="12" not-null="true" />
+        </property>
+        <property name="created_at" type="java.lang.String">
+            <column name="created_at" length="10" not-null="true" />
+        </property>
+        <property name="userGroup" type="java.lang.String">
+            <column name="userGroup" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
