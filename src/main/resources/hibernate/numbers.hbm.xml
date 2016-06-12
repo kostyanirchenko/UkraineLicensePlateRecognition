@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="source.entity.Numbers" table="numbers">
+        <id name="numberId" type="java.lang.Integer">
+            <column name="numberId" />
+            <generator class="identity" />
+        </id>
+        <property name="created_at" type="java.lang.String">
+            <column name="created_at" length="50" not-null="true" />
+        </property>
+        <property name="screening_at" type="java.lang.String">
+            <column name="screening_at" length="50" not-null="true" />
+        </property>
+        <property name="ip" type="java.lang.String">
+            <column name="ip" length="25" not-null="true" />
+        </property>
+        <property name="computerName" type="java.lang.String">
+            <column name="computerName" length="30" not-null="true" />
+        </property>
+        <property name="user" type="java.lang.String">
+            <column name="user" length="16" not-null="true" />
+        </property>
+        <property name="screenNumber" type="java.lang.Integer">
+            <column name="screenNumber" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
