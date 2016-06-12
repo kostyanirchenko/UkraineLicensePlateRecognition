@@ -1,11 +1,11 @@
 package util.opencv;
 
-import source.controllers.ShowController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import org.opencv.core.*;
 import org.opencv.core.Point;
 import org.opencv.imgproc.Imgproc;
+import source.controllers.ShowController;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -34,6 +34,7 @@ public class Recognition {
             grayImages.add(grayImage);
             bWImages.add(bWImage);
         }
+//        rotateImage(bWImages.get(0));
 //        Imgproc.GaussianBlur(grayImage, gaussianBlur, new Size(3, 3), 0, 1, 1);
 //        Mat workingImage = new Mat();
 //        Mat workingImage = doBackgroundRemove(image);
@@ -52,6 +53,10 @@ public class Recognition {
         Mat out = new Mat();
         Imgproc.Sobel(sobelMat, out, sobelMat.depth(), 2, 2);
         return out;
+    }
+
+    private static void rotateImage(Mat mat) {
+
     }
 
     public static Mat doGaussianBlur(Image image) {
