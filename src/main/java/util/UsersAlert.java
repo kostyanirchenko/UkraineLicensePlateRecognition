@@ -16,14 +16,14 @@ public class UsersAlert {
 
     public static void throwsException(Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка");
-        alert.setHeaderText("Внимание, произошел сбой программы!");
-        alert.setContentText("Пожалуйста, отправте отчет об ошибке на сайт разработчика.");
+        alert.setTitle("РћС€РёР±РєР°");
+        alert.setHeaderText("Р’РЅРёРјР°РЅРёРµ, РїСЂРѕРёР·РѕС€РµР» СЃР±РѕР№ РїСЂРѕРіСЂР°РјРјС‹!");
+        alert.setContentText("РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РѕС‚РїСЂР°РІС‚Рµ РѕС‚С‡РµС‚ РѕР± РѕС€РёР±РєРµ РЅР° СЃР°Р№С‚ СЂР°Р·СЂР°Р±РѕС‚С‡РёРєР°.");
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         String exceptionText = sw.toString();
-        Label label = new Label("Стек ошибки: ");
+        Label label = new Label("РЎС‚РµРє РѕС€РёР±РєРё: ");
         TextArea textArea = new TextArea(exceptionText);
         textArea.setEditable(false);
         textArea.setWrapText(true);
