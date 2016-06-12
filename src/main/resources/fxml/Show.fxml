@@ -22,6 +22,7 @@
          <children>
             <Button fx:id="download" layoutX="14.0" layoutY="704.0" mnemonicParsing="false" onAction="#downloadAction" text="Выбрать папку" />
             <Button fx:id="recognitionButton" layoutX="125.0" layoutY="704.0" mnemonicParsing="false" onAction="#recognitionAction" text="Распознать" />
+            <Button fx:id="viewAllImages" mnemonicParsing="false" onAction="#viewAllImagesAction" text="Посмотреть все" />
          </children>
       </HBox>
       <Label layoutX="10.0" layoutY="580.0" text="Каскад Хаара" />
