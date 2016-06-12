@@ -33,9 +33,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
-        System.out.println(System.getProperty("user.dir"));
         setCascadeClassifier(System.getProperty("user.dir") + "\\src\\main\\resources\\source\\haarcascade_russian_plate_number.xml");
         this.primaryStage.setTitle("Ukraine Automatic Licence Plate Recognition");
+        this.primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/anpr.png")));
         initRootLayout();
         initShow();
     }
@@ -88,8 +88,13 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
+        String sysArch = System.getProperty("sun.arch.data.model");
         String path = System.getProperty("user.dir").replaceAll("\\\\", "/");
-        System.setProperty("java.library.path", path + "/src/main/resources/source");
+        if(sysArch.equals("64")) {
+            System.setProperty("java.library.path", path + "/src/main/resources/source");
+        } else {
+            System.setProperty("java.library.path", path + "/src/main/resources/source/x86");
+        }
         Field sysPath = ClassLoader.class.getDeclaredField("sys_paths");
         sysPath.setAccessible(true);
         sysPath.set(null, null);
