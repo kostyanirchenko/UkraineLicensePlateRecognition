@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by NKostya on 19.05.2016.
+ * Created by Kostya Nirchenko.
+ * @since 19.05.2016
  */
 public class MenuController {
 
@@ -44,7 +45,7 @@ public class MenuController {
     }
 
     /**
-     *
+     * Выполняет вход администратора
      * @param actionEvent
      */
     public void loginAction(ActionEvent actionEvent) {
