@@ -9,9 +9,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import source.entity.Users;
 import util.HibernateUtil;
+import util.UsersAlert;
 
 /**
- * Created by NKostya on 06.06.2016.
+ * Created by Kostya Nirchenko.
+ * @since 06.06.2016
  */
 public class EditUserInfoController {
 
@@ -69,8 +71,7 @@ public class EditUserInfoController {
             this.nextClicked = true;
             editStage.close();
         } catch (Exception e) {
-//            UsersAlert.throwsException(e);
-            e.printStackTrace();
+            UsersAlert.throwsException(e);
         } finally {
             if(session != null && session.isOpen()) {
                 session.close();
@@ -79,5 +80,7 @@ public class EditUserInfoController {
     }
 
     public void cancelAction(ActionEvent actionEvent) {
+        this.nextClicked = false;
+        this.editStage.close();
     }
 }
