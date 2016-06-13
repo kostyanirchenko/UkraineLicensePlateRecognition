@@ -41,7 +41,7 @@
         </dependency>
     </dependencies>
     <build>
-        <resources>
+        <!--<resources>
             <resource>
                 <filtering>false</filtering>
                 <directory>${basedir}/src/main/resources/fxml</directory>
@@ -79,8 +79,30 @@
                     <include>**/*.dll</include>
                 </includes>
             </resource>
-        </resources>
+        </resources>-->
         <plugins>
+            <!--<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <format>{0}-{1,date,yyyyMMdd}</format>
+                    <items>
+                        <item>${project.version}</item>
+                        <item>timestamp</item>
+                    </items>
+                    <doCheck>true</doCheck>
+                    <doUpdate>true</doUpdate>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -96,6 +118,92 @@
                 <configuration>
                     <mainClass>source.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/lib/</outputDirectory>
+                    <overWriteReleases>false</overWriteReleases>
+                    <overWriteSnapshots>false</overWriteSnapshots>
+                    <overWriteIfNewer>false</overWriteIfNewer>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <classpathLayoutType>simple</classpathLayoutType>
+                            <mainClass>source.Main</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <version>2.0</version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/src/main/resources/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/src/main/resources/fxml/</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*.fxml</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/src/main/resources/hibernate/</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*.xml</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/src/main/resources/images/</directory>
+                                    <includes>
+                                        <include>**/*.png</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/src/main/resources/source/</directory>
+                                    <includes>
+                                        <include>**/*.dll</include>
+                                        <include>**/*.xml</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/src/main/resources/source/x86/</directory>
+                                    <includes>
+                                        <include>**/*.dll</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
