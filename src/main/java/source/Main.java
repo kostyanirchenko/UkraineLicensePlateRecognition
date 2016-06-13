@@ -31,7 +31,7 @@ public class Main extends Application {
     private CascadeClassifier cascadeClassifier;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         setCascadeClassifier(System.getProperty("user.dir") + "\\src\\main\\resources\\source\\haarcascade_russian_plate_number.xml");
         this.primaryStage.setTitle("Ukraine Automatic Licence Plate Recognition");
@@ -40,7 +40,7 @@ public class Main extends Application {
         initShow();
     }
 
-    public void initRootLayout() throws IOException{
+    public void initRootLayout() throws IOException {
             FXMLLoader loader = new FXMLLoader();
             rootLayout = loader.load(getClass().getResourceAsStream("/Menu.fxml"));
             MenuController menuController = loader.getController();
@@ -49,7 +49,7 @@ public class Main extends Application {
             primaryStage.show();
     }
 
-    public void initShow() throws IOException{
+    public void initShow() throws IOException {
             FXMLLoader loader = new FXMLLoader();
             AnchorPane pane = loader.load(getClass().getResourceAsStream("/Show.fxml"));
             ShowController showController = loader.getController();
@@ -88,6 +88,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
+        System.out.println(System.getProperty("user.dir"));
         String sysArch = System.getProperty("sun.arch.data.model");
         String path = System.getProperty("user.dir").replaceAll("\\\\", "/");
         if(sysArch.equals("64")) {
